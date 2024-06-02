@@ -1,3 +1,4 @@
+#define DEBUG
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using MineSharp.Core.Common;
 using MineSharp.Protocol.Cryptography;
@@ -35,8 +36,10 @@ internal class MinecraftStream
 
     public void EnableEncryption(byte[] sharedSecret)
     {
-        Logger.Debug("Enabling encryption.");
-
+        #if DEBUG 
+            Logger.Debug("Enabling encryption.");
+        #endif
+        
         lock (this._streamLock)
         {
             this._encryptionStream = new AesStream(this._networkStream, sharedSecret);

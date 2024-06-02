@@ -1,3 +1,4 @@
+#define DEBUG
 using MineSharp.Auth.Exceptions;
 using MineSharp.Core.Common;
 using MineSharp.Core.Common.Protocol;
@@ -103,7 +104,9 @@ internal class LoginPacketHandler : IPacketHandler
 
     private Task HandleSetCompression(SetCompressionPacket packet)
     {
-        Logger.Debug($"Enabling compression, threshold = {packet.Threshold}.");
+        #if DEBUG
+            Logger.Debug($"Enabling compression, threshold = {packet.Threshold}.");
+        #endif
         this._client.SetCompression(packet.Threshold);
         return Task.CompletedTask;
     }

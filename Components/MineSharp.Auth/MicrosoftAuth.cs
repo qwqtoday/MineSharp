@@ -1,3 +1,4 @@
+#define DEBUG
 using CmlLib.Core.Auth;
 using CmlLib.Core.Auth.Microsoft;
 using CmlLib.Core.Auth.Microsoft.MsalClient;
@@ -86,7 +87,9 @@ public static class MicrosoftAuth
         var certificates = PlayerCertificate.Deserialize(cacheFolder);
         if (certificates == null || certificates.RequiresRefresh())
         {
-            Logger.Debug($"Fetching new certificates.");
+            #if DEBUG 
+                Logger.Debug($"Fetching new certificates.");
+            #endif
             certificates = await api.FetchCertificates(mSession.AccessToken!);
             certificates.Serialize(cacheFolder);
         }

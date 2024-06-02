@@ -1,3 +1,4 @@
+#define DEBUG
 using MineSharp.Auth.Json;
 using MineSharp.Auth.Responses;
 using MineSharp.Core.Common;
@@ -59,7 +60,9 @@ public class MinecraftApi
     /// <returns></returns>
     public async Task<bool> JoinServer(string hash, string sessionToken, UUID uuid)
     {
-        Logger.Debug($"Sending join server request to mojang.");
+        #if DEBUG
+            Logger.Debug($"Sending join server request to mojang.");
+        #endif
         var request = new HttpRequestMessage(HttpMethod.Post, $"{this.SessionUrl}/session/minecraft/join");
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         var content = new JoinServerBlob()

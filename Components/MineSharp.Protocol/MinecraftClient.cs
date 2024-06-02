@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿#define DEBUG
+using System.Collections.Concurrent;
 using MineSharp.Auth;
 using MineSharp.Core.Common;
 using MineSharp.Core.Common.Protocol;
@@ -150,9 +151,9 @@ public sealed class MinecraftClient : IDisposable
             Logger.Warn($"Client is already connected!");
             return false;
         }
-
-        Logger.Debug($"Connecting to {this.ip}:{this.Port}.");
-
+        #if DEBUG
+            Logger.Debug($"Connecting to {this.ip}:{this.Port}.");
+        #endif
         try
         {
             if (this._tcpTcpFactory == null)
@@ -303,7 +304,9 @@ public sealed class MinecraftClient : IDisposable
         this._bundlePackets = !this._bundlePackets;
         if (!this._bundlePackets)
         {
-            Logger.Debug("Processing bundled packets");
+            #if DEBUG
+                Logger.Debug("Processing bundled packets");
+            #endif
             var tasks = this._bundledPackets.Select(
                                  p => this.HandleIncomingPacket(p.Item1, p.Item2, false))
                             .ToArray();
@@ -320,7 +323,9 @@ public sealed class MinecraftClient : IDisposable
         }
         else
         {
-            Logger.Debug("Bundling packets!");
+            #if DEBUG
+                Logger.Debug("Bundling packets!");
+            #endif
         }
     }
 
