@@ -81,7 +81,7 @@ public partial class Chat
         try
         {
             this.StyledMessage = this.ParseComponent(nbt);
-            this.Message = Regex.Replace(this.StyledMessage, "\\§[0-9a-fk-r]", "");
+            this.Message       = FormatTagRegex().Replace(this.StyledMessage, "");
         } catch
         {
             this.StyledMessage = this.NbtTag.ToString();
